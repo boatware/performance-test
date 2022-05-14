@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+    <head>
+        <title>performance-test</title>
+    </head>
+    <body>
+        <canvas id="chart" width="400" height="400"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+        <script>
+            const ctx = document.getElementById('chart').getContext('2d');
+            let rawData = "";
+            let rawFile = new XMLHttpRequest();
+            rawFile.open("GET", "./data.json", false);
+            rawFile.onreadystatechange = function ()
+            {
+                if(rawFile.readyState === 4)
+                {
+                    if(rawFile.status === 200 || rawFile.status === 0)
+                    {
+                        rawData = rawFile.responseText;
+                    }
+                }
+            }
+            rawFile.send(null);
+
+            const data = JSON.parse(rawData);
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
