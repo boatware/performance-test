@@ -1,8 +1,15 @@
 import sys
+import random
 
 def test():
-    a = 42 + 17
+    a = [*range(1, 1000)]
+    b = [*range(1, 1000)]
+    return random.choice(a) * random.choice(b)
 
+def write_to_file(i):
+    file = open("write-test.txt","w")
+    file.write(format(i))
+    file.close()
 def main():
     try:
         arg = sys.argv[1]
@@ -11,6 +18,7 @@ def main():
             for i in range(0, int(arg)):
                 b = i
                 test()
+                write_to_file(b)
 
         else:
             print("param not a number")
