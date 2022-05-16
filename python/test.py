@@ -1,15 +1,19 @@
 import sys
 import random
 
+
 def test():
     a = [*range(1, 1000)]
     b = [*range(1, 1000)]
     return random.choice(a) * random.choice(b)
 
+
 def write_to_file(i):
-    file = open("write-test.txt","w")
+    file = open("write-test.txt", "w")
     file.write(format(i))
     file.close()
+
+
 def main():
     try:
         arg = sys.argv[1]
