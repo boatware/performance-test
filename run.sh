@@ -13,7 +13,7 @@ range=(
 1000000000 2000000000 3000000000 4000000000 5000000000 6000000000 7000000000 8000000000 9000000000 # 1b
 )
 
-limit=6000
+limit=1000
 
 dirs=$(\ls)
 
@@ -63,7 +63,7 @@ do
     echo "$cmd $i $ms ms" >> run.log
     if [[ $ms -gt $limit ]]; then
       echo -e "\nLast run took longer than $((limit / 1000)) seconds. Exiting"
-      continue;
+      break;
     fi
   done
 
