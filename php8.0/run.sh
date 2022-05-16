@@ -20,12 +20,13 @@ range=(
 
 for i in ${range[@]}
 do
+  echo -ne "\r$i"
   ts=$(date +%s%N)
   $cmd $i
   ms=$((($(date +%s%N) - $ts)/1000000))
   echo "$cmd $i $ms ms" >> run.log
   if [[ $ms -gt 60000 ]]; then
-    echo "Last run took longer than 60 seconds. Exiting"
+    echo -e "\nLast run took longer than 60 seconds. Exiting"
     exit 0;
   fi
 done

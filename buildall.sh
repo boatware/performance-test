@@ -5,6 +5,8 @@ dirs=(
 "c++"
 "c++11"
 "c11"
+"go"
+"java"
 )
 
 for dir in ${dirs[@]}
