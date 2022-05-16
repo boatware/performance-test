@@ -21,7 +21,7 @@ def main():
         if arg.isnumeric():
             for i in range(0, int(arg)):
                 b = i
-                test()
+                b += test()
                 write_to_file(b)
 
         else:
