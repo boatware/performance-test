@@ -2,9 +2,12 @@
 
 A collection of tests in different programming languages which do all the same things:
 
-- Step into a for loop
-- Call a function
-- Do basic arithmetc calculations
-- Save values to a variable
+- Declare a function (or equivalent structure) which calculates and returns the sum of 42 and a random number
+- Declare a function (or equivalent structure) which accepts an integer as parameter `i` and writes this parameter to the file `./write-test.txt` (relative to the running executable)
+- Check if an argument is given and if this argument is a number and can be converted to an integer, then save that argument as `arg`
+- Create a for loop which runs from 0 to `arg`
+  - Assign the current iteration `i` to a new variable
+  - Call the first function
+  - Call the second function
 
 The loop count is always given by an argument.

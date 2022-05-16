@@ -2,13 +2,26 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"regexp"
 	"strconv"
+	"time"
 )
 
-func test() {
-	_ = 42 + 17
+func test() int {
+	rand.Seed(time.Now().UnixNano())
+	r := rand.Intn(1000-2) + 1
+	a := rand.Intn(1000-2) + 1
+	return r * a
+}
+
+func writeToFile(i int) {
+	d1 := []byte(strconv.Itoa(i))
+	err := os.WriteFile("./write-test.txt", d1, 0644)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {
@@ -33,7 +46,8 @@ func main() {
 	}
 
 	for i := 0; i < arg; i++ {
-		_ = i
-		test()
+		b := i
+		b += test()
+		writeToFile(b)
 	}
 }

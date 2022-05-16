@@ -1,7 +1,13 @@
 <?php
 
 function test() {
-    $a = 42 + 17;
+    $r = rand(1, 1000);
+    $a = rand(1, 1000);
+    return $r * $a;
+}
+
+function writeToFile($i) {
+    file_put_contents("./write-test.txt", $i);
 }
 
 if (!isset($argv[1])) {
@@ -17,6 +23,6 @@ if (!is_numeric($argv[1])) {
 $arg = (int) $argv[1];
 for ($i = 0; $i < $arg; $i++) {
     $b = $i;
-    /** @noinspection PhpExpressionResultUnusedInspection */
-    test();
+    $b += test();
+    writeToFile($b);
 }
