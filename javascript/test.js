@@ -28,6 +28,6 @@ if (isNaN(process.argv[2])) {
 let arg = parseInt(process.argv[2]);
 for (let i = 0; i < arg; i++) {
     let b = i;
-    b *= test();
+    b += test();
     writeToFile(b);
 }

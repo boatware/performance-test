@@ -9,7 +9,7 @@ limit=60
 # 1 2 3 4 5 6 7 8 9
 # 10 20 30 40 50 60 70 80 90
 # 100 200 300 400 500 600 700 800 900
-zeros=4
+zeros=999
 
 # Set the default mode
 # pow = use numbers to the power of 2
@@ -34,6 +34,11 @@ do
     --log|--use-log)
       shift
       mode="log"
+      ;;
+
+    --linear|--use-linear)
+      shift
+      mode="lin"
       ;;
 
     --pow|--use-power)
@@ -84,6 +89,7 @@ do
   k=0
   num=1
   index=1
+  lin_index=1
 
   while [[ $num -lt $(( (zeros + 1) * 9 + 1 )) ]];
   do
@@ -91,8 +97,12 @@ do
 
      if [[ $mode == "log" ]]; then
        arg=$mu
+     elif [[ $mode == "lin" ]]; then
+       arg=$lin_index
+       num=1
      else
        arg=$index
+       num=1
      fi
 
      echo -ne "\r$arg"
@@ -109,6 +119,7 @@ do
      fi
 
      index=$((index*2))
+     ((lin_index++))
 
      [[ j -eq 9 ]] && j=0 && ((k++))
      ((j++))
