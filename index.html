@@ -28,10 +28,14 @@
                 type: 'line',
                 data: data,
                 options: {
-                    indexAxis: 'y',
+                    indexAxis: 'x',
                     scales: {
                         x: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                        },
+                        y: {
+                            display: true,
+                            type: 'logarithmic',
                         }
                     }
                 }

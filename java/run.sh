@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cmd="java test"
+cmd="java Main"
 if [[ -f "run.log" ]]; then
   rm -rf run.log
 fi
