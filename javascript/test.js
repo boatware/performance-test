@@ -7,12 +7,12 @@ function test() {
 }
 
 function writeToFile(i) {
-    fs.writeFile('/Users/joe/test.txt', i, err => {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
-    });
+    try {
+        fs.writeFileSync('./write-test.txt', i.toString());
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
 }
 
 if (process.argv.length < 3) {

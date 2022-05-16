@@ -1,5 +1,14 @@
+result=0
 function test() {
-  a=$(expr 42 + 17)
+  r=$(( ( RANDOM % 1000 )  + 1 ))
+  a=$(( ( RANDOM % 1000 )  + 1 ))
+  result=$((r * a))
+}
+
+function writeToFile() {
+  if [[ $1 -ne "" ]]; then
+    echo $1 > ./write-test.txt
+  fi
 }
 
 if [[ $1 == "" ]]; then
@@ -16,4 +25,6 @@ for (( i=0 ; $i < $1 ; i++ ))
 do
   b=$i
   test
+  b=$((i + result))
+  writeToFile $b
 done

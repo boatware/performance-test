@@ -8,7 +8,7 @@ foreach (new \DirectoryIterator(".") as $dir) {
 
   $dirname = $dir->getFilename();
   $filename = "./$dirname/run.log";
-  if (!file_exists($filename)) {
+  if (!file_exists($filename) || !file_exists("./$dirname/write-test.txt")) {
     continue;
   }
 
@@ -138,6 +138,10 @@ function exportChartJsData($rawData) {
     ];
     $datasets[] = $toAdd;
     $colorIndex++;
+
+    if ($colorIndex == sizeof($borderColor)) {
+        $colorIndex = 0;
+    }
   }
 
   $data['labels'] = $labels;
