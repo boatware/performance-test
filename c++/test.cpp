@@ -1,6 +1,7 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include <iostream>
+
+using namespace std;
 
 void test() {
     int a = 42 + 17;
@@ -8,13 +9,13 @@ void test() {
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        printf("missing param\n");
+        cout << "missing param\n" << endl;
         exit(1);
     }
     char *p;
-    long arg = strtol(argv[1], &p, 10);
+    long long arg = strtol(argv[1], &p, 10);
 
-    for (long i = 0; i < arg; i++) {
+    for (long long i = 0; i < arg; i++) {
         int b = i;
         test();
     }
