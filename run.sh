@@ -1,37 +1,43 @@
 #!/bin/bash
 
-range=(
-         1          2          3          4          5          6          7          8          9
-        10         20         30         40         50         60         70         80         90
-       100        200        300        400        500        600        700        800        900
-      1000       2000       3000       4000       5000       6000       7000       8000       9000 # 1k
-     10000      20000      30000      40000      50000      60000      70000      80000      90000 # 10k
-    100000     200000     300000     400000     500000     600000     700000     800000     900000 # 100k
-   1000000    2000000    3000000    4000000    5000000    6000000    7000000    8000000    9000000 # 1m
-  10000000   20000000   30000000   40000000   50000000   60000000   70000000   80000000   90000000 # 10m
- 100000000  200000000  300000000  400000000  500000000  600000000  700000000  800000000  900000000 # 100m
-1000000000 2000000000 3000000000 4000000000 5000000000 6000000000 7000000000 8000000000 9000000000 # 1b
-)
+# Define the limit of how long a script run can take maximum.
+limit=60
 
-limit=1000
+# Define how many iterations should be tested.
+# For example, zeros=2
+# Then the script will iterate over
+# 1 2 3 4 5 6 7 8 9
+# 10 20 30 40 50 60 70 80 90
+# 100 200 300 400 500 600 700 800 900
+zeros=8
 
-dirs=$(\ls)
+dirs=()
 
 if [[ $1 == "" ]]; then
   echo "missing param. use a directory name or --all"
   exit 1
 fi
 
-if [[ $1 == "--all" ]]; then
-  dirs=$(\ls)
-else
-  if [[ -d $1 ]]; then
-    dirs=($1)
-  else
-    echo "directory not found."
-    exit 1
-  fi
-fi
+while [[ "$1" != "" ]];
+do
+  case "$1" in
+    --all)
+      shift
+      dirs=$(\ls)
+      ;;
+
+    *)
+      if [[ -d $1 ]]; then
+        dirs+=($1)
+      else
+        echo "directory $1 not found"
+        exit 1
+      fi
+      shift
+      ;;
+
+  esac
+done
 
 for dir in ${dirs[@]}
 do
@@ -54,18 +60,30 @@ do
 
   source ./run.sh
 
-  for i in ${range[@]}
+  j=1
+  k=0
+  num=1
+
+  while [[ $num -lt $(( (zeros + 1) * 9 + 1 )) ]];
   do
-    echo -ne "\r$i"
-    ts=$(date +%s%N)
-    $cmd $i
-    ms=$((($(date +%s%N) - $ts)/1000000))
-    echo "$cmd $i $ms ms" >> run.log
-    if [[ $ms -gt $limit ]]; then
-      echo -e "\nLast run took longer than $((limit / 1000)) seconds. Exiting"
-      break;
-    fi
+     mu=$(echo "scale=2;$j*10^$k"|bc)
+
+     echo -ne "\r$mu"
+     ts=$(date +%s%N)
+     $cmd $mu
+     ms=$((($(date +%s%N) - $ts)/1000000))
+     echo "$cmd $mu $ms ms" >> run.log
+     if [[ $ms -gt $((limit * 1000)) ]]; then
+       echo -e "\nLast run took longer than $limit seconds. Exiting"
+       break;
+     fi
+
+     [[ j -eq 9 ]] && j=0 && ((k++))
+     ((j++))
+     ((num++))
   done
+
+  echo ""
 
   cd ..
 done
