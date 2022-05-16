@@ -15,23 +15,33 @@ range=(
 
 limit=1000
 
-dirs=$(\ls)
+dirs=()
 
 if [[ $1 == "" ]]; then
   echo "missing param. use a directory name or --all"
   exit 1
 fi
 
-if [[ $1 == "--all" ]]; then
-  dirs=$(\ls)
-else
-  if [[ -d $1 ]]; then
-    dirs=($1)
-  else
-    echo "directory not found."
-    exit 1
-  fi
-fi
+while [[ "$1" != "" ]];
+do
+  case "$1" in
+    --all)
+      shift
+      dirs=$(\ls)
+      ;;
+
+    *)
+      if [[ -d $1 ]]; then
+        dirs+=($1)
+      else
+        echo "directory $1 not found"
+        exit 1
+      fi
+      shift
+      ;;
+
+  esac
+done
 
 for dir in ${dirs[@]}
 do

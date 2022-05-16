@@ -11,3 +11,13 @@ A collection of tests in different programming languages which do all the same t
   - Call the second function
 
 The loop count is always given by an argument.
+
+## Usage
+
+To run the tests, execute the following command:
+
+```shell
+$ ./run.sh [[lang1, lang2]|--all]
+```
+
+where lang represents a directory name (and thus language name). Pass --all to run all tests
