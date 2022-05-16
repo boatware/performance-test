@@ -9,7 +9,12 @@ limit=60
 # 1 2 3 4 5 6 7 8 9
 # 10 20 30 40 50 60 70 80 90
 # 100 200 300 400 500 600 700 800 900
-zeros=9
+zeros=4
+
+# Set the default mode
+# pow = use numbers to the power of 2
+# log = calc logarithmic scale
+mode="pow"
 
 dirs=()
 
@@ -24,6 +29,16 @@ do
     --no-limit)
       shift
       limit=0
+      ;;
+
+    --log|--use-log)
+      shift
+      mode="log"
+      ;;
+
+    --pow|--use-power)
+      shift
+      mode="pow"
       ;;
 
     --all)
@@ -68,16 +83,23 @@ do
   j=1
   k=0
   num=1
+  index=1
 
   while [[ $num -lt $(( (zeros + 1) * 9 + 1 )) ]];
   do
      mu=$(echo "scale=2;$j*10^$k"|bc)
 
-     echo -ne "\r$mu"
+     if [[ $mode == "log" ]]; then
+       arg=$mu
+     else
+       arg=$index
+     fi
+
+     echo -ne "\r$arg"
      ts=$(date +%s%N)
-     $cmd $mu
+     $cmd $arg
      ms=$((($(date +%s%N) - $ts)/1000000))
-     echo "$cmd $mu $ms ms" >> run.log
+     echo "$cmd $arg $ms ms" >> run.log
 
      if [[ $limit -gt 0 ]]; then
        if [[ $ms -gt $((limit * 1000)) ]]; then
@@ -85,6 +107,8 @@ do
          break;
        fi
      fi
+
+     index=$((index*2))
 
      [[ j -eq 9 ]] && j=0 && ((k++))
      ((j++))
