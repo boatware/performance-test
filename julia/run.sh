@@ -1,2 +1,2 @@
 #!/bin/bash
-cmd="/usr/bin/julia test.jl"
+cmd="$(which julia) test.jl"

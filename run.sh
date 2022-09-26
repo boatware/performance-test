@@ -9,7 +9,7 @@ limit=60
 # 1 2 3 4 5 6 7 8 9
 # 10 20 30 40 50 60 70 80 90
 # 100 200 300 400 500 600 700 800 900
-zeros=999
+zeros=1
 
 # Set the default mode
 # pow = use numbers to the power of 2
@@ -67,6 +67,10 @@ done
 for dir in ${dirs[@]}
 do
   if [[ ! -d $dir ]]; then
+    continue
+  fi
+
+  if [[ $dir == "vendor" ]]; then
     continue
   fi
 
