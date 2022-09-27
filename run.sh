@@ -74,6 +74,10 @@ do
     continue
   fi
 
+  if [[ $dir == "advanced" ]]; then
+    continue
+  fi
+
   echo "running performance test in directory: $dir"
 
   cd $dir
