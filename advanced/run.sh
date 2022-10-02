@@ -77,6 +77,10 @@ do
         continue;
     fi
 
+    if [[ $dir == "results" ]]; then
+        continue;
+    fi
+
     echo "running performance test in directory: $dir"
 
     if [[ ! -f "./run.sh" ]]; then
